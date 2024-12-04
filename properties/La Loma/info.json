@@ -1,0 +1,17 @@
+{
+  "title": "La Loma",
+  "price": "$500,000",
+  "location": "123 Main St, Anytown, USA",
+  "description": "Beautiful 3 bedroom, 2 bathroom house with a large backyard and a 2-car garage.",
+  "images": [
+    "image1.jpg",
+    "image2.jpg",
+    "image3.jpg"
+  ],
+  "features": [
+    "3 bedrooms",
+    "2 bathrooms",
+    "2-car garage",
+    "Large backyard"
+  ]
+}
