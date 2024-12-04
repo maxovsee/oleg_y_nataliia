@@ -1,21 +1,15 @@
-const fs = require('fs');
-const path = require('path');
-
 const propertiesFolder = 'properties';
 
-fs.readdir(propertiesFolder, (err, folders) => {
-  if (err) {
-    console.error(err);
-  } else {
-    folders.forEach((folder) => {
-      const propertyFolder = path.join(propertiesFolder, folder);
-      const infoFile = path.join(propertyFolder, 'info.json');
+fetch(`${propertiesFolder}/folders.json`)
+  .then(response => response.json())
+  .then(folders => {
+    folders.forEach(folder => {
+      const propertyFolder = `${propertiesFolder}/${folder}`;
+      const infoFile = `${propertyFolder}/info.json`;
 
-      fs.readFile(infoFile, (err, data) => {
-        if (err) {
-          console.error(err);
-        } else {
-          const propertyInfo = JSON.parse(data);
+      fetch(infoFile)
+        .then(response => response.json())
+        .then(propertyInfo => {
           const advertHtml = `
             <div class="property-listing">
               <h2>${propertyInfo.title}</h2>
@@ -33,23 +27,19 @@ fs.readdir(propertiesFolder, (err, folders) => {
 
           // Add the images to the page
           const imageGallery = document.querySelector('.image-gallery');
-          const imagesFolder = path.join(propertyFolder, 'images');
+          const imagesFolder = `${propertyFolder}/images`;
 
-          fs.readdir(imagesFolder, (err, images) => {
-            if (err) {
-              console.error(err);
-            } else {
-              images.forEach((image) => {
+          fetch(`${imagesFolder}/images.json`)
+            .then(response => response.json())
+            .then(images => {
+              images.forEach(image => {
                 const imgElement = document.createElement('img');
-                imgElement.src = `properties/${folder}/images/${image}`;
+                imgElement.src = `${imagesFolder}/${image}`;
                 imgElement.alt = `${propertyInfo.title} - ${image}`;
 
                 imageGallery.appendChild(imgElement);
               });
-            }
-          });
-        }
-      });
+            });
+        });
     });
-  }
-});
+  });
