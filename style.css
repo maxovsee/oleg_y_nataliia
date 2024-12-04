@@ -1,27 +1,39 @@
 body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 header {
-  background-color: #333;
-  color: #fff;
-  padding: 1em;
-  text-align: center;
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
 }
 
 main {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding: 2em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
 }
 
 .property-listing {
-  background-color: #f7f7f7;
-  border: 1px solid #ddd;
-  margin: 1em;
-  padding: 1em;
-  width: 300px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    margin: 20px;
+    padding: 20px;
+    width: 300px;
+}
+
+.property-listing h2 {
+    margin-top: 0;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    clear: both;
 }
