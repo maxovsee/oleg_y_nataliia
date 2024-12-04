@@ -1,36 +1,18 @@
-// script.js
-// Property data array
-const properties = [
-    {
-        id: 1,
-        title: "Property 1",
-        description: "This is a beautiful property",
-        price: 100000,
-        location: "New York"
-    },
-    {
-        id: 2,
-        title: "Property 2",
-        description: "This is another beautiful property",
-        price: 200000,
-        location: "Los Angeles"
-    },
-    // Add more properties here
-];
-
-// Function to generate property links
-function generatePropertyLinks() {
-    const mainSection = document.querySelector("main");
-    mainSection.innerHTML = "";
-
-    properties.forEach((property) => {
-        const propertyLink = document.createElement("a");
-        propertyLink.href = `property${property.id}.html`;
-        propertyLink.textContent = property.title;
-        mainSection.appendChild(propertyLink);
-        mainSection.appendChild(document.createElement("br"));
+// Fetch property data from JSON file
+fetch('properties.json')
+  .then(response => response.json())
+  .then(data => {
+    const propertyListings = document.getElementById('property-listings');
+    data.forEach(property => {
+      const propertyListing = document.createElement('div');
+      propertyListing.innerHTML = `
+        <h2>${property.title}</h2>
+        <img src="${property.image}" alt="${property.title}">
+        <p>${property.description}</p>
+        <p>Price: ${property.price}</p>
+        <p>Location: ${property.location}</p>
+      `;
+      propertyListings.appendChild(propertyListing);
     });
-}
-
-// Call the function to generate property links
-generatePropertyLinks();
+  })
+  .catch(error => console.error('Error:', error));
