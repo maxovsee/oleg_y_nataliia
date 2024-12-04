@@ -1,45 +1,29 @@
-const propertiesFolder = 'properties';
+const repo = 'maxovsee/oleg_y_nataliia';
+const folder = 'properties';
 
-fetch(`${propertiesFolder}/folders.json`)
+fetch(`https://api.github.com/repos/${repo}/contents/${folder}`)
   .then(response => response.json())
-  .then(folders => {
-    folders.forEach(folder => {
-      const propertyFolder = `${propertiesFolder}/${folder}`;
-      const infoFile = `${propertyFolder}/info.json`;
+  .then(files => {
+    files.forEach(file => {
+      if (file.type === 'dir') {
+        const folderName = file.name;
+        const folderUrl = `https://api.github.com/repos/${repo}/contents/${folder}/${folderName}`;
 
-      fetch(infoFile)
-        .then(response => response.json())
-        .then(propertyInfo => {
-          const advertHtml = `
-            <div class="property-listing">
-              <h2>${propertyInfo.title}</h2>
-              <p>Price: ${propertyInfo.price}</p>
-              <p>Location: ${propertyInfo.location}</p>
-              <p>${propertyInfo.description}</p>
-              <div class="image-gallery">
-              </div>
-            </div>
-          `;
+        fetch(folderUrl)
+          .then(response => response.json())
+          .then(files => {
+            files.forEach(file => {
+              if (file.name.endsWith('.jpg')) {
+                const imageUrl = `https://raw.githubusercontent.com/${repo}/${folder}/${folderName}/${file.name}`;
 
-          // Add the advert to the page
-          const mainElement = document.querySelector('main');
-          mainElement.innerHTML += advertHtml;
-
-          // Add the images to the page
-          const imageGallery = document.querySelector('.image-gallery');
-          const imagesFolder = `${propertyFolder}/images`;
-
-          fetch(`${imagesFolder}/images.json`)
-            .then(response => response.json())
-            .then(images => {
-              images.forEach(image => {
                 const imgElement = document.createElement('img');
-                imgElement.src = `${imagesFolder}/${image}`;
-                imgElement.alt = `${propertyInfo.title} - ${image}`;
+                imgElement.src = imageUrl;
+                imgElement.alt = file.name;
 
-                imageGallery.appendChild(imgElement);
-              });
+                document.body.appendChild(imgElement);
+              }
             });
-        });
+          });
+      }
     });
   });
