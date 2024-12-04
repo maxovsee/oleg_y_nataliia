@@ -1,18 +1,34 @@
-const properties = [
-  { id: 1, title: "Property 1", price: "$100,000", location: "New York" },
-  { id: 2, title: "Property 2", price: "$200,000", location: "Los Angeles" },
-  { id: 3, title: "Property 3", price: "$300,000", location: "Chicago" },
-];
+const fs = require('fs');
+const path = require('path');
 
-const mainElement = document.querySelector("main");
+const propertiesFolder = 'properties';
 
-properties.forEach((property) => {
-  const listingElement = document.createElement("div");
-  listingElement.classList.add("property-listing");
-  listingElement.innerHTML = `
-    <h2>${property.title}</h2>
-    <p>Price: ${property.price}</p>
-    <p>Location: ${property.location}</p>
-  `;
-  mainElement.appendChild(listingElement);
+fs.readdir(propertiesFolder, (err, folders) => {
+  if (err) {
+    console.error(err);
+  } else {
+    folders.forEach((folder) => {
+      const propertyFolder = path.join(propertiesFolder, folder);
+      const infoFile = path.join(propertyFolder, 'info.json');
+
+      fs.readFile(infoFile, (err, data) => {
+        if (err) {
+          console.error(err);
+        } else {
+          const propertyInfo = JSON.parse(data);
+          const advertHtml = `
+            <div class="property-listing">
+              <h2>${propertyInfo.title}</h2>
+              <p>Price: ${propertyInfo.price}</p>
+              <p>Location: ${propertyInfo.location}</p>
+            </div>
+          `;
+
+          // Add the advert to the page
+          const mainElement = document.querySelector('main');
+          mainElement.innerHTML += advertHtml;
+        }
+      });
+    });
+  }
 });
