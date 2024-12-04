@@ -33,12 +33,20 @@ fs.readdir(propertiesFolder, (err, folders) => {
 
           // Add the images to the page
           const imageGallery = document.querySelector('.image-gallery');
-          propertyInfo.images.forEach((image) => {
-            const imgElement = document.createElement('img');
-            imgElement.src = `properties/${propertyInfo.title}/${image}`;
-            imgElement.alt = `${propertyInfo.title} - ${image}`;
+          const imagesFolder = path.join(propertyFolder, 'images');
 
-            imageGallery.appendChild(imgElement);
+          fs.readdir(imagesFolder, (err, images) => {
+            if (err) {
+              console.error(err);
+            } else {
+              images.forEach((image) => {
+                const imgElement = document.createElement('img');
+                imgElement.src = `properties/${folder}/images/${image}`;
+                imgElement.alt = `${propertyInfo.title} - ${image}`;
+
+                imageGallery.appendChild(imgElement);
+              });
+            }
           });
         }
       });
