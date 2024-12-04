@@ -1,3 +1,4 @@
+// script.js
 // Property data array
 const properties = [
     {
@@ -17,22 +18,19 @@ const properties = [
     // Add more properties here
 ];
 
-// Function to generate property listings
-function generatePropertyListings() {
+// Function to generate property links
+function generatePropertyLinks() {
     const mainSection = document.querySelector("main");
     mainSection.innerHTML = "";
 
     properties.forEach((property) => {
-        const propertyListing = document.createElement("div");
-        propertyListing.innerHTML = `
-            <h2>${property.title}</h2>
-            <p>${property.description}</p>
-            <p>Price: ${property.price}</p>
-            <p>Location: ${property.location}</p>
-        `;
-        mainSection.appendChild(propertyListing);
+        const propertyLink = document.createElement("a");
+        propertyLink.href = `property${property.id}.html`;
+        propertyLink.textContent = property.title;
+        mainSection.appendChild(propertyLink);
+        mainSection.appendChild(document.createElement("br"));
     });
 }
 
-// Call the function to generate property listings
-generatePropertyListings();
+// Call the function to generate property links
+generatePropertyLinks();
