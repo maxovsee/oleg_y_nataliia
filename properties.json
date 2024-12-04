@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1,
+    "title": "Property 1",
+    "description": "This is a beautiful property",
+    "price": 100000,
+    "location": "New York",
+    "image": "property1.jpg"
+  },
+  {
+    "id": 2,
+    "title": "Property 2",
+    "description": "This is another beautiful property",
+    "price": 200000,
+    "location": "Los Angeles",
+    "image": "property2.jpg"
+  },
+  // Add more properties here
+]
